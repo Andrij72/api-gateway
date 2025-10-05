@@ -1,0 +1,18 @@
+services:
+  notification-service:
+    image: api-gateway:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    restart: always
+    ports:
+      - "9000:9000"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+      - microservices-net
+
+networks:
+  microservices-net:
+    external: true
