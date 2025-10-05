@@ -29,7 +29,7 @@ jobs:
       - name: Build & run unit tests
         run: |
           chmod +x ./mvnw
-          ./mvnw clean test -Dspring.profiles.active=test
+          ./mvnw clean test -Dspring.profiles.active=docker
 
       - name: Extract short SHA
         run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
