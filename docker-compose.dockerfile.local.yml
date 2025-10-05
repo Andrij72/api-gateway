@@ -1,6 +1,6 @@
 services:
   notification-service:
-    image: api-gateway:latest
+    image: api-gateway:dev-latest
     build:
       context: .
       dockerfile: Dockerfile
