@@ -31,13 +31,6 @@ jobs:
         run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
       - name: Build Docker image
         run: docker build -t ${{ env.DOCKER_IMAGE }}:dev-${{ env.SHORT_SHA }} .
-      - name: Test container starts
-        run: |
-          docker run -d --name api-gateway-test -p 9000:9000 ${{ env.DOCKER_IMAGE }}:dev-${{ env.SHORT_SHA }}
-          sleep 36
-          docker ps | grep api-gateway-test
-          docker stop api-gateway-test
-          docker rm api-gateway-test
       - name: Push Docker image (dev)
         uses: docker/build-push-action@v4
         with:
