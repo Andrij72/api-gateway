@@ -12,4 +12,4 @@ target/
 
 .env
 src/main/resources/application.properties
-!src/main/resources/application.properties.example
+!src/main/resources/application.properties.exampl
