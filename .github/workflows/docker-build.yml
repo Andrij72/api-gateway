@@ -34,7 +34,7 @@ jobs:
       - name: Test container starts
         run: |
           docker run -d --name api-gateway-test -p 9000:9000 ${{ env.DOCKER_IMAGE }}:dev-${{ env.SHORT_SHA }}
-          sleep 10
+          sleep 36
           docker ps | grep api-gateway-test
           docker stop api-gateway-test
           docker rm api-gateway-test
