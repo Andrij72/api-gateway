@@ -5,14 +5,14 @@ services:
     image: mysql:8.0.32
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${ROOT_MYSQL_PASS}
       MYSQL_DATABASE: keycloak
-      MYSQL_USER: keycloak
-      MYSQL_PASSWORD: password
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASS}
     volumes:
       - keycloak_db:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "3308:3306"
     networks:
       - microservices-net
 
@@ -25,16 +25,23 @@ services:
       DB_VENDOR: MYSQL
       DB_ADDR: keycloak-mysql
       DB_DATABASE: keycloak
-      DB_USER: keycloak
-      DB_PASSWORD: password
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASS}
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASS}
     ports:
       - "8181:8080"
     volumes:
       - ./keycloak/realms:/opt/keycloak/data/import
     depends_on:
       - keycloak-mysql
+    networks:
+      - microservices-net
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
     networks:
       - microservices-net
 
