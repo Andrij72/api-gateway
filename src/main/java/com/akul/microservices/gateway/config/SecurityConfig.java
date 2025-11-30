@@ -24,10 +24,11 @@ public class SecurityConfig {
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(auth -> auth
-                        .pathMatchers("/actuator/health").permitAll()
+                        .pathMatchers("/actuator/health","/actuator/prometheus").permitAll()
                         .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+                .cors(cors -> {})
                 .build();
     }
 
