@@ -31,22 +31,23 @@ public class SecurityConfig {
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .cors(cors -> cors.configurationSource(corsConfigSource()))
                 .authorizeExchange(auth -> auth
-                        // preflight
                         .pathMatchers(HttpMethod.OPTIONS).permitAll()
-                        // actuator
                         .pathMatchers("/actuator/**").permitAll()
-                        // CLIENT
+
                         .pathMatchers(HttpMethod.GET, "/api/v1/products/**").hasAnyRole("CLIENT", "ADMIN")
+
                         .pathMatchers(HttpMethod.POST, "/api/v1/cart/**").hasRole("CLIENT")
                         .pathMatchers(HttpMethod.POST, "/api/v1/orders/**").hasRole("CLIENT")
-                        .pathMatchers(HttpMethod.GET, "/api/v1/orders/**").hasRole("CLIENT")
-                        // ADMIN
+
+                        .pathMatchers(HttpMethod.GET, "/api/v1/orders/**").hasAnyRole("CLIENT", "ADMIN")
+
                         .pathMatchers(HttpMethod.POST, "/api/v1/products/**").hasRole("ADMIN")
                         .pathMatchers(HttpMethod.PUT, "/api/v1/products/**").hasRole("ADMIN")
                         .pathMatchers(HttpMethod.DELETE, "/api/v1/products/**").hasRole("ADMIN")
-                        .pathMatchers(HttpMethod.GET, "/api/v1/orders/**").hasRole("ADMIN") // бачить всі замовлення
+
                         .pathMatchers("/api/v1/users/**").hasRole("ADMIN")
                         .pathMatchers("/api/v1/orders/*/cancel").hasRole("ADMIN")
+
                         .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
