@@ -1,17 +1,15 @@
 services:
-  notification-service:
-    image: api-gateway:dev-latest
-    build:
-      context: .
-      dockerfile: Dockerfile
+  api-gateway:
+    image: andr72/api-gateway:dev-latest
     container_name: api-gateway
-    restart: always
     ports:
       - "9000:9000"
     environment:
       SPRING_PROFILES_ACTIVE: docker
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://localhost:8181/realms/MicroServicesGrid-realm
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
     networks:
-      - microservices-net
+      - infra-network
 
 networks:
   microservices-net:
