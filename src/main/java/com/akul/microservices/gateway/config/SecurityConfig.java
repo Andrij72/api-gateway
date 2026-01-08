@@ -35,15 +35,19 @@ public class SecurityConfig {
                         .pathMatchers("/actuator/**").permitAll()
 
                         .pathMatchers(HttpMethod.GET, "/api/v1/products/**").hasAnyRole("CLIENT", "ADMIN")
+                        .pathMatchers(HttpMethod.GET, "/api/v1/admin/products/**").hasRole("ADMIN")
+
 
                         .pathMatchers(HttpMethod.POST, "/api/v1/cart/**").hasRole("CLIENT")
                         .pathMatchers(HttpMethod.POST, "/api/v1/orders/**").hasRole("CLIENT")
 
                         .pathMatchers(HttpMethod.GET, "/api/v1/orders/**").hasAnyRole("CLIENT", "ADMIN")
 
-                        .pathMatchers(HttpMethod.POST, "/api/v1/products/**").hasRole("ADMIN")
-                        .pathMatchers(HttpMethod.PUT, "/api/v1/products/**").hasRole("ADMIN")
-                        .pathMatchers(HttpMethod.DELETE, "/api/v1/products/**").hasRole("ADMIN")
+
+                        .pathMatchers(HttpMethod.POST, "/api/v1/admin/products/**").hasRole("ADMIN")
+                        .pathMatchers(HttpMethod.PUT, "/api/v1/admin/products/**").hasRole("ADMIN")
+                        .pathMatchers(HttpMethod.DELETE, "/api/v1/admin/products/**").hasRole("ADMIN")
+                        .pathMatchers(HttpMethod.PATCH, "/api/v1/admin/products/**").hasRole("ADMIN")
 
                         .pathMatchers("/api/v1/users/**").hasRole("ADMIN")
                         .pathMatchers("/api/v1/orders/*/cancel").hasRole("ADMIN")
